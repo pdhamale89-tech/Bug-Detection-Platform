@@ -113,9 +113,13 @@ export function BugDetailPage() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => {
-                navigator.clipboard?.writeText(window.location.href)
-                showToast({ title: 'Link copied', description: 'Share link copied to clipboard.', variant: 'success' })
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(window.location.href)
+                  showToast({ title: 'Link copied', description: 'Share link copied to clipboard.', variant: 'success' })
+                } catch {
+                  showToast({ title: 'Copy failed', description: 'Your browser blocked clipboard access.', variant: 'error' })
+                }
               }}
             >
               <Share2 className="h-3.5 w-3.5" /> Share
